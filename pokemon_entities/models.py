@@ -13,17 +13,24 @@ class Pokemon(models.Model):
         verbose_name='pokemon_image'
     )
 
-    def _str_(self):
+    def __str__(self):
         return self.title
 
 
 class PokemonEntity(models.Model):
+    pokemon = models.ForeignKey(
+        Pokemon, on_delete=models.CASCADE,
+        related_name='entites',
+        verbose_name='pokemon',
+        null=True,
+        blank=True
+    )
     latitude = models.FloatField(
         verbose_name='latitude'
     )
-    longetude = models.FloatField(
-        verbose_name='longetude'
+    longitude = models.FloatField(
+        verbose_name='longitude'
     )
 
-    def _str_(self):
-        return self.latitude, self.longetude
+    def __str__(self):
+        return f'{self.pokemon.title}, {self.latitude}, {self.longitude}'

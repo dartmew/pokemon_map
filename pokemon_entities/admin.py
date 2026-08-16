@@ -8,4 +8,4 @@ class PokemonAdmin(admin.ModelAdmin):
 
 @admin.register(PokemonEntity)
 class PokemonEntityAdmin(admin.ModelAdmin):
-    list_display = ('latitude', 'longetude')
+    list_display = ('id', 'pokemon', 'latitude', 'longitude')
