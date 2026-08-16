@@ -31,6 +31,16 @@ class PokemonEntity(models.Model):
     longitude = models.FloatField(
         verbose_name='longitude'
     )
+    appeared_at = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name='appeared_at'
+    )
+    disappeared_at = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name='disappeared_at'
+    )
 
     def __str__(self):
         return f'{self.pokemon.title}, {self.latitude}, {self.longitude}'
