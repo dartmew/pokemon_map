@@ -15,3 +15,15 @@ class Pokemon(models.Model):
 
     def _str_(self):
         return self.title
+
+
+class PokemonEntity(models.Model):
+    latitude = models.FloatField(
+        verbose_name='latitude'
+    )
+    longetude = models.FloatField(
+        verbose_name='longetude'
+    )
+
+    def _str_(self):
+        return self.latitude, self.longetude
