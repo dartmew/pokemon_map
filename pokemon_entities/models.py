@@ -31,12 +31,12 @@ class PokemonEntity(models.Model):
     longitude = models.FloatField(
         verbose_name='longitude'
     )
-    appeared_at = models.DateField(
+    appeared_at = models.DateTimeField(
         null=True,
         blank=True,
         verbose_name='appeared_at'
     )
-    disappeared_at = models.DateField(
+    disappeared_at = models.DateTimeField(
         null=True,
         blank=True,
         verbose_name='disappeared_at'
