@@ -8,7 +8,7 @@ class PokemonAdmin(admin.ModelAdmin):
 
 @admin.register(PokemonEntity)
 class PokemonEntityAdmin(admin.ModelAdmin):
-    list_display = ('id', 'pokemon', 'latitude', 'longitude', 'appeared_at', 'disappeared_at')
-    list_filter = ('pokemon',)
+    list_display = ('id', 'pokemon', 'latitude', 'longitude', 'appeared_at', 'disappeared_at', 'level', 'health', 'strength', 'defense', 'stamina')
+    list_filter = ('pokemon', 'level')
     search_fields = ('pokemon_title',)
-    fields = ('pokemon', 'latitude', 'longitude', 'appeared_at', 'disappeared_at')
+    fields = ('pokemon', 'latitude', 'longitude', 'appeared_at', 'disappeared_at', 'level', 'health', 'strength', 'defense', 'stamina')

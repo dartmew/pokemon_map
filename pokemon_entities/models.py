@@ -41,6 +41,26 @@ class PokemonEntity(models.Model):
         blank=True,
         verbose_name='disappeared_at'
     )
+    level = models.IntegerField(
+        default=1,
+        verbose_name='Level'
+    )
+    health = models.IntegerField(
+        default=100,
+        verbose_name='Health'
+    )
+    strength = models.IntegerField(
+        default=10,
+        verbose_name='Strength'
+    )
+    defense = models.IntegerField(
+        default=10,
+        verbose_name='Defence'
+    )
+    stamina = models.IntegerField(
+        default=10,
+        verbose_name='Stamina'
+    )
 
     def __str__(self):
         return f'{self.pokemon.title}, {self.latitude}, {self.longitude}'
