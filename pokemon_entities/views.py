@@ -81,7 +81,7 @@ def show_pokemon(request, pokemon_id):
         'pokemon_id': pokemon.id,
         'title_ru': pokemon.title,
         'img_url': request.build_absolute_uri(pokemon.image.url) if pokemon.image else DEFAULT_IMAGE_URL,
-        'description': getattr(pokemon, 'description', ''),
+        'description': pokemon.description or '',
         'title_en': getattr(pokemon, 'title_en', ''),
         'previous_evolution': None,
         'next_evolution': None,
