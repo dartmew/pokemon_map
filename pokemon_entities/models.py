@@ -4,37 +4,37 @@ from django.db import models  # noqa F401
 class Pokemon(models.Model):
     title = models.CharField(
         max_length=200,
-        verbose_name='pokemon_name'
+        verbose_name='Название покемона (рус.)'
     )
     image = models.ImageField(
         upload_to='pokemon_images',
         blank=True,
         null=True,
-        verbose_name='pokemon_image'
+        verbose_name='Картинка'
     )
     description = models.TextField(
         blank=True,
         null=True,
-        verbose_name='description'
+        verbose_name='Описание'
     )
     title_en = models.CharField(
         max_length=200,
         blank=True,
         null=True,
-        verbose_name='pokemon_name_en'
+        verbose_name='Название на английском'
     )
     title_jp = models.CharField(
         max_length=200,
         blank=True,
         null=True,
-        verbose_name='pokemon_name_jp'
+        verbose_name='Название на японском'
     )
     previous_evolution = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name='previous_evolution',
+        verbose_name='Из кого эволюционировал',
         related_name='next_evolutions'
     )
 
@@ -46,45 +46,45 @@ class PokemonEntity(models.Model):
     pokemon = models.ForeignKey(
         Pokemon, on_delete=models.CASCADE,
         related_name='entities',
-        verbose_name='pokemon',
+        verbose_name='Покемон',
         null=True,
         blank=True
     )
     latitude = models.FloatField(
-        verbose_name='latitude'
+        verbose_name='Широта'
     )
     longitude = models.FloatField(
-        verbose_name='longitude'
+        verbose_name='Долгота'
     )
     appeared_at = models.DateTimeField(
         null=True,
         blank=True,
-        verbose_name='appeared_at'
+        verbose_name='Время появления'
     )
     disappeared_at = models.DateTimeField(
         null=True,
         blank=True,
-        verbose_name='disappeared_at'
+        verbose_name='Время исчезновения'
     )
     level = models.IntegerField(
         default=1,
-        verbose_name='Level'
+        verbose_name='Уровень'
     )
     health = models.IntegerField(
         default=100,
-        verbose_name='Health'
+        verbose_name='Здоровье'
     )
     strength = models.IntegerField(
         default=10,
-        verbose_name='Strength'
+        verbose_name='Атака'
     )
     defense = models.IntegerField(
         default=10,
-        verbose_name='Defence'
+        verbose_name='Защита'
     )
     stamina = models.IntegerField(
         default=10,
-        verbose_name='Stamina'
+        verbose_name='Выносливость'
     )
 
     def __str__(self):
