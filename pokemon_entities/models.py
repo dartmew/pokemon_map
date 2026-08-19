@@ -17,6 +17,18 @@ class Pokemon(models.Model):
         null=True,
         verbose_name='description'
     )
+    title_en = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        verbose_name='pokemon_name_en'
+    )
+    title_jp = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        verbose_name='pokemon_name_jp'
+    )
 
     def __str__(self):
         return self.title

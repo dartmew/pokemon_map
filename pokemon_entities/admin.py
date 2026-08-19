@@ -3,8 +3,8 @@ from .models import Pokemon, PokemonEntity
 
 @admin.register(Pokemon)
 class PokemonAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'image')
-    fields = ('title', 'image', 'description')
+    list_display = ('id', 'title', 'title_en', 'title_jp', 'image')
+    fields = ('title', 'title_en', 'title_jp', 'image', 'description')
 
 
 @admin.register(PokemonEntity)
