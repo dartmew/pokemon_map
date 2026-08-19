@@ -3,6 +3,8 @@ import json
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from .models import Pokemon, PokemonEntity
+from django.db import models
+from django.utils import timezone
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -40,10 +42,14 @@ def show_all_pokemons(request):
             'title_ru': pokemon.title,
         })
 
-    folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
+    now = timezone.now()
+    active_entities = PokemonEntity.objects.filter(
+        models.Q(appeared_at__isnull=True) | models.Q(appeared_at__lte=now),
+        models.Q(disappeared_at__isnull=True) | models.Q(disappeared_at__gte=now)
+    )
 
-    entities = PokemonEntity.objects.all()
-    for entity in entities:
+    folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
+    for entity in active_entities:
         pokemon = entity.pokemon
         if pokemon and pokemon.image:
             img_url = request.build_absolute_uri(pokemon.image.url)
