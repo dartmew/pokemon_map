@@ -10,5 +10,5 @@ class PokemonAdmin(admin.ModelAdmin):
 class PokemonEntityAdmin(admin.ModelAdmin):
     list_display = ('id', 'pokemon', 'latitude', 'longitude', 'appeared_at', 'disappeared_at', 'level', 'health', 'strength', 'defense', 'stamina')
     list_filter = ('pokemon', 'level')
-    search_fields = ('pokemon_title',)
+    search_fields = ('pokemon__title',)
     fields = ('pokemon', 'latitude', 'longitude', 'appeared_at', 'disappeared_at', 'level', 'health', 'strength', 'defense', 'stamina')
