@@ -1,7 +1,7 @@
 import folium
 import json
 from django.http import HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Pokemon, PokemonEntity
 from django.db import models
 from django.utils import timezone
@@ -64,24 +64,31 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
-        pokemons = json.load(database)['pokemons']
+    pokemon = get_object_or_404(Pokemon, id=pokemon_id)
 
-    for pokemon in pokemons:
-        if pokemon['pokemon_id'] == int(pokemon_id):
-            requested_pokemon = pokemon
-            break
-    else:
-        return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
+    now = timezone.now()
+    entities = pokemon.entities.filter(
+        models.Q(appeared_at__isnull=True) | models.Q(appeared_at__lte=now),
+        models.Q(disappeared_at__isnull=True) | models.Q(disappeared_at__gte=now)
+    )
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    for pokemon_entity in requested_pokemon['entities']:
-        add_pokemon(
-            folium_map, pokemon_entity['lat'],
-            pokemon_entity['lon'],
-            pokemon['img_url']
-        )
+    for entity in entities:
+        img_url = request.build_absolute_uri(pokemon.image.url) if pokemon.image else DEFAULT_IMAGE_URL
+        add_pokemon(folium_map, entity.latitude, entity.longitude, img_url)
+
+    pokemon_data = {
+        'pokemon_id': pokemon.id,
+        'title_ru': pokemon.title,
+        'img_url': request.build_absolute_uri(pokemon.image.url) if pokemon.image else DEFAULT_IMAGE_URL,
+        'description': getattr(pokemon, 'description', ''),
+        'title_en': getattr(pokemon, 'title_en', ''),
+        'previous_evolution': None,
+        'next_evolution': None,
+        'entities': [{'lat': e.latitude, 'lon': e.longitude} for e in entities],
+    }
 
     return render(request, 'pokemon.html', context={
-        'map': folium_map._repr_html_(), 'pokemon': pokemon
+        'map': folium_map._repr_html_(),
+        'pokemon': pokemon_data,
     })
