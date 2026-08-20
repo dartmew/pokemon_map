@@ -14,19 +14,16 @@ class Pokemon(models.Model):
     )
     description = models.TextField(
         blank=True,
-        null=True,
         verbose_name='Описание'
     )
     title_en = models.CharField(
         max_length=200,
         blank=True,
-        null=True,
         verbose_name='Название на английском'
     )
     title_jp = models.CharField(
         max_length=200,
         blank=True,
-        null=True,
         verbose_name='Название на японском'
     )
     previous_evolution = models.ForeignKey(
